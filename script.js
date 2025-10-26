@@ -241,9 +241,42 @@ function init() {
         counterData = midCounterData;
     }
     
+    // Update the pick slots to show correct role BEFORE selecting enemy and populating grid
+    updateRoleDisplay();
+    
+    // Now select enemy and populate - the enemyMidPick element is ready
     selectRandomEnemy();
     populateChampionGrid();
     setupEventListeners();
+}
+
+// Update the role display on pick slots
+function updateRoleDisplay() {
+    // Update your team's picking slot
+    const yourTeamSlots = document.querySelectorAll('.your-team .pick-slot');
+    const enemyTeamSlots = document.querySelectorAll('.enemy-team .pick-slot');
+    
+    if (currentRole === 'adc') {
+        // Move picking indicator to ADC slot (index 3)
+        yourTeamSlots[2].classList.remove('picking'); // Remove from MID
+        yourTeamSlots[2].innerHTML = '<div class="role-label">MID</div>'; // Reset MID
+        yourTeamSlots[2].classList.add('empty');
+        
+        yourTeamSlots[3].classList.remove('empty');
+        yourTeamSlots[3].classList.add('picking'); // Add to ADC
+        yourTeamSlots[3].innerHTML = '<div class="role-label">ADC</div><div class="picking-indicator">Picking...</div>';
+        
+        // Move enemy pick to ADC slot (index 3)
+        enemyTeamSlots[2].classList.remove('picked'); // Remove from MID
+        enemyTeamSlots[2].innerHTML = '<div class="role-label">MID</div>'; // Reset MID
+        enemyTeamSlots[2].classList.add('empty');
+        enemyTeamSlots[2].removeAttribute('id');
+        
+        enemyTeamSlots[3].classList.remove('empty');
+        enemyTeamSlots[3].classList.add('picked');
+        enemyTeamSlots[3].id = 'enemyMidPick'; // Keep same ID for code compatibility
+        enemyTeamSlots[3].innerHTML = '<div class="role-label">ADC</div><img src="" alt="" class="picked-champion"><div class="champion-name"></div>';
+    }
 }
 
 // Function to get champion image URL
