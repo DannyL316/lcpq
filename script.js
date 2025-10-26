@@ -1,5 +1,5 @@
 // Champion List (all 39 mid laners)
-const champions = [
+const midChampions = [
     'Ahri', 'Akali', 'Akshan', 'Anivia', 'Annie',
     'Aurelion Sol', 'Aurora', 'Azir', 'Cassiopeia', 'Diana',
     'Ekko', 'Fizz', 'Galio', 'Hwei', 'Irelia',
@@ -10,16 +10,41 @@ const champions = [
     'Yasuo', 'Yone', 'Zed', 'Zoe'
 ];
 
-// Top 20 most picked champions (for enemy selection)
-const top20Champions = [
+// All ADC champions (full roster for user to choose from)
+const adcChampions = [
+    'Aphelios', 'Ashe', 'Caitlyn', 'Corki', 'Draven',
+    'Ezreal', 'Jhin', 'Jinx', 'Kai\'Sa', 'Kalista',
+    'Kog\'Maw', 'Lucian', 'Miss Fortune', 'Nilah', 'Samira',
+    'Senna', 'Sivir', 'Smolder', 'Tristana', 'Twitch',
+    'Varus', 'Vayne', 'Xayah', 'Yunara', 'Zeri',
+    'Ziggs'
+];
+
+// Top 20 most picked mid champions (for enemy selection)
+const top20MidChampions = [
     'Yasuo', 'Katarina', 'Veigar', 'Malzahar', 'Akali',
     'Mel', 'Yone', 'Ahri', 'Fizz', 'Diana',
     'Sylas', 'Lux', 'Syndra', 'Vladimir', 'LeBlanc',
     'Vex', 'Ekko', 'Xerath', 'Zoe', 'Galio'
 ];
 
+// Top 20 most picked ADC champions (for enemy selection)
+const top20AdcChampions = [
+    'Caitlyn', 'Miss Fortune', 'Jinx', 'Jhin', 'Kai\'Sa',
+    'Ashe', 'Tristana', 'Ezreal', 'Smolder', 'Samira',
+    'Lucian', 'Draven', 'Xayah', 'Varus', 'Sivir',
+    'Ziggs', 'Vayne', 'Kog\'Maw', 'Twitch', 'Yunara'
+];
+
+// Current role being played
+let currentRole = 'mid'; // Default to mid
+
+// Dynamic champion list based on role
+let champions = midChampions;
+let top20Champions = top20MidChampions;
+
 // Counter Data (embedded directly to avoid CORS issues)
-const counterData = {
+const midCounterData = {
   "Yasuo": [
     {"champion": "Malzahar", "reason": "Point-and-click suppress goes through wind wall, passive shield blocks his poke, can shove him in easily"},
     {"champion": "Annie", "reason": "Instant targeted stun, he can't wind wall it, burst combo deletes him"}
@@ -102,6 +127,93 @@ const counterData = {
   ]
 };
 
+// ADC Counter Data
+const adcCounterData = {
+  "Caitlyn": [
+    {"champion": "Jhin", "reason": "Outranges her with 4th shot, can match her poke and siege"},
+    {"champion": "Sivir", "reason": "Spell shield blocks traps and Q, wave clear matches Caitlyn's push"}
+  ],
+  "Miss Fortune": [
+    {"champion": "Sivir", "reason": "Spell shield blocks her ultimate, can shove waves and nullify her poke"},
+    {"champion": "Ezreal", "reason": "High mobility with E dodges her abilities and ultimate"}
+  ],
+  "Jinx": [
+    {"champion": "Ashe", "reason": "Outranges her in lane, slows prevent Jinx from kiting, arrow catches her out"},
+    {"champion": "Vayne", "reason": "Can all-in her weak early game, true damage cuts through her"},
+  ],
+  "Jhin": [
+    {"champion": "Vayne", "reason": "Can tumble his W root, outscales him, all-in punishes reload windows"},
+    {"champion": "Jinx", "reason": "Outscales him, rockets outrange during reload, better teamfight"}
+  ],
+  "Kai'Sa": [
+    {"champion": "Caitlyn", "reason": "Outranges her significantly, traps zone her from diving"},
+    {"champion": "Ashe", "reason": "Slows deny Kai'Sa's mobility, arrow locks her down"}
+  ],
+  "Ashe": [
+    {"champion": "Sivir", "reason": "Spell shield blocks arrow, wave clear prevents Ashe from freezing"},
+    {"champion": "Ezreal", "reason": "Mobility dodges arrow and poke, safe farming denies Ashe's engage"}
+  ],
+  "Tristana": [
+    {"champion": "Ashe", "reason": "Outranges Tristana early, slows prevent jump escapes, kites her well"},
+    {"champion": "Jinx", "reason": "Rockets match Tristana's range, better scaling, chompers stop jumps"}
+  ],
+  "Ezreal": [
+    {"champion": "Sivir", "reason": "Spell shield blocks his poke, wave clear forces him to overextend"},
+    {"champion": "Smolder", "reason": "Outscales him, can match his poke and stack safely"}
+  ],
+  "Smolder": [
+    {"champion": "Ashe", "reason": "Long range poke prevents stacking, slows punish positioning"},
+    {"champion": "Draven", "reason": "Early aggression denies stacks, dominates lane before Smolder scales"}
+  ],
+  "Samira": [
+    {"champion": "Xayah", "reason": "Featherstorm dodges Samira's ultimate, feathers punish her aggression"},
+    {"champion": "Sivir", "reason": "Spell shield blocks her abilities, can kite away from melee range"}
+  ],
+  "Lucian": [
+    {"champion": "Caitlyn", "reason": "Outranges his short range, traps punish his dashes"},
+    {"champion": "Kai'Sa", "reason": "Can match his burst, evolved abilities outrange him, better scaling"}
+  ],
+  "Draven": [
+    {"champion": "Jhin", "reason": "Can match his early damage, traps and range punish aggression"},
+    {"champion": "Caitlyn", "reason": "Outranges him safely, traps zone him, doesn't have to trade"}
+  ],
+  "Xayah": [
+    {"champion": "Caitlyn", "reason": "Outranges her, traps punish positioning, safe poke"},
+    {"champion": "Ashe", "reason": "Long range poke, slows prevent feather setups, arrow catches her"}
+  ],
+  "Varus": [
+    {"champion": "Jinx", "reason": "Rockets outrange him, chompers stop his engage, better scaling"},
+    {"champion": "Lucian", "reason": "High mobility dodges skill shots, can all-in immobile Varus"}
+  ],
+  "Sivir": [
+    {"champion": "Tristana", "reason": "All-in with jump beats Sivir's wave clear, bomb burst damage"},
+    {"champion": "Smolder", "reason": "Outscales her utility, can stack safely, better late game"}
+  ],
+  "Ziggs": [
+    {"champion": "Caitlyn", "reason": "Outranges him, traps punish his positioning, safer siege"},
+    {"champion": "Draven", "reason": "High damage forces Ziggs off wave, can all-in him"}
+  ],
+  "Vayne": [
+    {"champion": "Ashe", "reason": "Slows prevent Vayne from kiting, arrow catches her, abuses weak early"},
+    {"champion": "Tristana", "reason": "Jump range closes Vayne's kiting space, bomb burst, range advantage early"}
+  ],
+  "Kog'Maw": [
+    {"champion": "Twitch", "reason": "Matches his late game, stealth allows flanks on immobile Kog"},
+    {"champion": "Smolder", "reason": "Better scaling pattern, more mobility, outranges late game"}
+  ],
+  "Twitch": [
+    {"champion": "Kai'Sa", "reason": "Can match his stealth with evolved abilities, burst beats his DPS"},
+    {"champion": "Caitlyn", "reason": "Traps reveal stealth, long range poke, safer positioning"}
+  ],
+  "Yunara": [
+    {"champion": "Caitlyn", "reason": "Long range and traps control positioning, safe poke from distance"},
+    {"champion": "Vayne", "reason": "True damage cuts through, can duel effectively, mobility advantage"}
+  ]
+};
+
+// Current counter data based on role
+let counterData = midCounterData;
+
 let enemyChampion = '';
 let selectedChampion = '';
 
@@ -114,6 +226,21 @@ const explanationModal = document.getElementById('explanationModal');
 
 // Initialize the game
 function init() {
+    // Get role from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    currentRole = urlParams.get('role') || 'mid';
+    
+    // Set champion lists based on role
+    if (currentRole === 'adc') {
+        champions = adcChampions;
+        top20Champions = top20AdcChampions;
+        counterData = adcCounterData;
+    } else {
+        champions = midChampions;
+        top20Champions = top20MidChampions;
+        counterData = midCounterData;
+    }
+    
     selectRandomEnemy();
     populateChampionGrid();
     setupEventListeners();
@@ -130,7 +257,9 @@ function getChampionImageUrl(championName) {
         'Aurelion Sol': 'AurelionSol',
         'Twisted Fate': 'TwistedFate',
         'Mel': 'Mel',
-        'Aurora': 'Aurora'
+        'Aurora': 'Aurora',
+        'Kai\'Sa': 'Kaisa',
+        'Kog\'Maw': 'KogMaw'
     };
     
     if (specialCases[championName]) {
