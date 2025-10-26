@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-image: url(../images/menu-bg.jpg);
+    background-image: url(menu-bg.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -100,15 +100,15 @@ body::before {
 }
 
 .top-icon {
-    background-image: url(../images/top.png);
+    background-image: url(top.png);
 }
 
 .mid-icon {
-    background-image: url(../images/mid.png);
+    background-image: url(mid.png);
 }
 
 .adc-icon {
-    background-image: url(../images/adc.png);
+    background-image: url(adc.png);
 }
 
 .role-label {
@@ -125,4 +125,5 @@ body::before {
     right: 30px;
     font-size: 1.2rem;
     color: rgba(240, 230, 210, 0.6);
+
 }
