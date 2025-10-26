@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url(../images/menu-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #f0e6d2;
+    overflow: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.menu-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.menu-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #f0e6d2;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    margin-bottom: 60px;
+    letter-spacing: 2px;
+}
+
+.menu-subtitle {
+    font-size: 2rem;
+    color: #f0e6d2;
+    margin-bottom: 40px;
+    font-weight: normal;
+}
+
+.role-buttons {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+.role-btn {
+    width: 280px;
+    height: 320px;
+    background: rgba(10, 15, 20, 0.9);
+    border: 3px solid #785a28;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.role-btn:hover:not(.disabled) {
+    border-color: #c8aa6e;
+    background: rgba(120, 90, 40, 0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(200, 170, 110, 0.4);
+}
+
+.role-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: #3a3a3a;
+}
+
+.role-icon {
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+.top-icon {
+    background-image: url(../images/top.png);
+}
+
+.mid-icon {
+    background-image: url(../images/mid.png);
+}
+
+.adc-icon {
+    background-image: url(../images/adc.png);
+}
+
+.role-label {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #c8aa6e;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.version {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 1.2rem;
+    color: rgba(240, 230, 210, 0.6);
+}

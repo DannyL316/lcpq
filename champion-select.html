@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League Counter Pick Trainer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Champion Select Screen -->
+    <div id="championSelect" class="screen active">
+        <header>
+            <h1>PICK YOUR CHAMPION!</h1>
+        </header>
+
+        <div class="draft-container">
+            <!-- Left Side - Your Team -->
+            <div class="team-side your-team">
+                <div class="team-picks">
+                    <div class="pick-slot empty">
+                        <div class="role-label">TOP</div>
+                    </div>
+                    <div class="pick-slot empty">
+                        <div class="role-label">JUNGLE</div>
+                    </div>
+                    <div class="pick-slot picking">
+                        <div class="role-label">MID</div>
+                        <div class="picking-indicator">Picking...</div>
+                    </div>
+                    <div class="pick-slot empty">
+                        <div class="role-label">ADC</div>
+                    </div>
+                    <div class="pick-slot empty">
+                        <div class="role-label">SUPPORT</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center - Champion Grid -->
+            <div class="champion-select-center">
+                <div class="controls">
+                    <div class="filter-icons">
+                        <button class="filter-btn">⚔</button>
+                        <button class="filter-btn">🛡</button>
+                        <button class="filter-btn">✨</button>
+                        <button class="filter-btn">🏹</button>
+                        <button class="filter-btn">💚</button>
+                    </div>
+                    <select class="sort-dropdown">
+                        <option>Sort By Name</option>
+                    </select>
+                    <input type="text" class="search-bar" placeholder="Search">
+                </div>
+
+                <div class="champion-grid" id="championGrid">
+                    <!-- Champions will be populated by JavaScript -->
+                </div>
+
+                <button class="lock-in-btn" id="lockInBtn" disabled>LOCK IN</button>
+            </div>
+
+            <!-- Right Side - Enemy Team -->
+            <div class="team-side enemy-team">
+                <div class="team-picks">
+                    <div class="pick-slot empty">
+                        <div class="role-label">TOP</div>
+                    </div>
+                    <div class="pick-slot empty">
+                        <div class="role-label">JUNGLE</div>
+                    </div>
+                    <div class="pick-slot picked" id="enemyMidPick">
+                        <div class="role-label">MID</div>
+                        <img src="" alt="" class="picked-champion">
+                        <div class="champion-name"></div>
+                    </div>
+                    <div class="pick-slot empty">
+                        <div class="role-label">ADC</div>
+                    </div>
+                    <div class="pick-slot empty">
+                        <div class="role-label">SUPPORT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Screen -->
+    <div id="feedbackScreen" class="screen">
+        <div class="feedback-container">
+            <h2 id="feedbackTitle"></h2>
+            
+            <div class="pick-summary">
+                <div class="your-pick">
+                    <h3>You Picked:</h3>
+                    <div class="champion-display" id="yourPickDisplay"></div>
+                </div>
+                <div class="vs">VS</div>
+                <div class="enemy-pick">
+                    <h3>Enemy Picked:</h3>
+                    <div class="champion-display" id="enemyPickDisplay"></div>
+                </div>
+            </div>
+
+            <div class="correct-answers">
+                <h3>Correct Counter Picks:</h3>
+                <div class="counter-list" id="counterList"></div>
+            </div>
+
+            <button class="why-btn" id="whyBtn">Why?</button>
+
+            <div class="action-buttons">
+                <button class="btn" id="mainMenuBtn">Main Menu</button>
+                <button class="btn primary" id="nextQuestionBtn">Next Question</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explanation Modal -->
+    <div id="explanationModal" class="modal">
+        <div class="modal-content">
+            <h3>Counter Pick Explanation</h3>
+            <div id="explanationText"></div>
+            <button class="btn primary" id="closeModalBtn">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
