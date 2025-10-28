@@ -10,6 +10,20 @@ const midChampions = [
     'Yasuo', 'Yone', 'Zed', 'Zoe'
 ];
 
+// All Top lane champions
+const topChampions = [
+    'Aatrox', 'Akali', 'Ambessa', 'Camille', 'Cho\'Gath',
+    'Darius', 'Dr. Mundo', 'Fiora', 'Gangplank', 'Garen',
+    'Gnar', 'Gragas', 'Gwen', 'Illaoi', 'Irelia',
+    'Jax', 'Jayce', 'K\'Sante', 'Kayle', 'Kennen',
+    'Kled', 'Malphite', 'Mordekaiser', 'Nasus', 'Olaf',
+    'Ornn', 'Pantheon', 'Poppy', 'Renekton', 'Riven',
+    'Rumble', 'Sett', 'Shen', 'Sion', 'Tahm Kench',
+    'Teemo', 'Trundle', 'Tryndamere', 'Urgot', 'Vayne',
+    'Volibear', 'Warwick', 'Wukong', 'Yasuo', 'Yone',
+    'Yorick'
+];
+
 // All ADC champions (full roster for user to choose from)
 const adcChampions = [
     'Aphelios', 'Ashe', 'Caitlyn', 'Corki', 'Draven',
@@ -28,6 +42,14 @@ const top20MidChampions = [
     'Vex', 'Ekko', 'Xerath', 'Zoe', 'Galio'
 ];
 
+// Top 20 most picked Top champions (for enemy selection)
+const top20TopChampions = [
+    'Sett', 'Mordekaiser', 'Darius', 'Garen', 'Malphite',
+    'Teemo', 'Dr. Mundo', 'Jax', 'Kayle', 'Yorick',
+    'Nasus', 'Cho\'Gath', 'Sion', 'Aatrox', 'Renekton',
+    'Urgot', 'Illaoi', 'Shen', 'Riven', 'Warwick'
+];
+
 // Top 20 most picked ADC champions (for enemy selection)
 const top20AdcChampions = [
     'Caitlyn', 'Miss Fortune', 'Jinx', 'Jhin', 'Kai\'Sa',
@@ -37,13 +59,13 @@ const top20AdcChampions = [
 ];
 
 // Current role being played
-let currentRole = 'mid'; // Default to mid
+let currentRole = 'mid';
 
 // Dynamic champion list based on role
 let champions = midChampions;
 let top20Champions = top20MidChampions;
 
-// Counter Data (embedded directly to avoid CORS issues)
+// Counter Data - Mid Lane
 const midCounterData = {
   "Yasuo": [
     {"champion": "Malzahar", "reason": "Point-and-click suppress goes through wind wall, passive shield blocks his poke, can shove him in easily"},
@@ -139,7 +161,7 @@ const adcCounterData = {
   ],
   "Jinx": [
     {"champion": "Ashe", "reason": "Outranges her in lane, slows prevent Jinx from kiting, arrow catches her out"},
-    {"champion": "Vayne", "reason": "Can all-in her weak early game, true damage cuts through her"},
+    {"champion": "Vayne", "reason": "Can all-in her weak early game, true damage cuts through her"}
   ],
   "Jhin": [
     {"champion": "Vayne", "reason": "Can tumble his W root, outscales him, all-in punishes reload windows"},
@@ -211,6 +233,90 @@ const adcCounterData = {
   ]
 };
 
+// Top Lane Counter Data
+const topCounterData = {
+  "Sett": [
+    {"champion": "Malphite", "reason": "Armor scaling and Q poke punish Sett, can absorb his damage with W passive"},
+    {"champion": "Gragas", "reason": "High sustain, E dodges Sett's abilities, can disengage easily with barrel"}
+  ],
+  "Mordekaiser": [
+    {"champion": "Fiora", "reason": "Riposte blocks his ultimate, true damage shreds through his armor, mobility beats his slow kit"},
+    {"champion": "Jax", "reason": "Counter Strike dodges his Q and autos, can match his split push, outscales"}
+  ],
+  "Darius": [
+    {"champion": "Teemo", "reason": "Range advantage, blind stops his autos and bleed stacks, kites him easily"},
+    {"champion": "Vayne", "reason": "True damage ignores his armor, tumble dodges Q, condemn stops his engage"}
+  ],
+  "Garen": [
+    {"champion": "Teemo", "reason": "Range advantage prevents his passive, blind stops his E spin, mushrooms zone him"},
+    {"champion": "Darius", "reason": "Stronger all-in potential, bleed stacks punish trades, pulls him back"}
+  ],
+  "Malphite": [
+    {"champion": "Mordekaiser", "reason": "AP damage bypasses armor stacking, ultimate isolates and kills Malphite"},
+    {"champion": "Cho'Gath", "reason": "True damage ultimate, sustain matches Malphite's tankiness, outscales"}
+  ],
+  "Teemo": [
+    {"champion": "Malphite", "reason": "Can tank through blind and poke, all-in with ultimate kills Teemo"},
+    {"champion": "Irelia", "reason": "Dashes close gap quickly, sustained damage beats Teemo, heals through poke"}
+  ],
+  "Dr. Mundo": [
+    {"champion": "Vayne", "reason": "True damage shreds through his health stacking, %HP damage counters tanks"},
+    {"champion": "Fiora", "reason": "True damage from vitals, can match his sustain, outduels him"}
+  ],
+  "Jax": [
+    {"champion": "Malphite", "reason": "Attack speed slow counters Jax's passive, armor negates his damage"},
+    {"champion": "Teemo", "reason": "Blind negates Counter Strike and autos, range prevents Jax from trading"}
+  ],
+  "Kayle": [
+    {"champion": "Pantheon", "reason": "Strong early pressure denies her scaling, dive potential, point-click stun"},
+    {"champion": "Irelia", "reason": "High early damage, mobility to chase, can snowball before Kayle scales"}
+  ],
+  "Yorick": [
+    {"champion": "Irelia", "reason": "Dashes through ghouls, heals from minions, can fight inside Maiden"},
+    {"champion": "Tryndamere", "reason": "Can clear ghouls, split push pressure, undying rage beats Yorick cage"}
+  ],
+  "Nasus": [
+    {"champion": "Darius", "reason": "Stronger early, can zone Nasus from stacks, bleed damage punishes"},
+    {"champion": "Teemo", "reason": "Denies stacks with poke and zone control, blind stops Q stacks"}
+  ],
+  "Cho'Gath": [
+    {"champion": "Fiora", "reason": "True damage shreds health stacking, mobile to dodge Q and W"},
+    {"champion": "Darius", "reason": "Strong trading, bleed stacks, can match sustain and tankiness"}
+  ],
+  "Sion": [
+    {"champion": "Fiora", "reason": "True damage through tankiness, can riposte his abilities, mobile to dodge"},
+    {"champion": "Mordekaiser", "reason": "Isolates with ultimate, AP damage ignores armor, matches tankiness"}
+  ],
+  "Aatrox": [
+    {"champion": "Fiora", "reason": "Riposte blocks his Q knockup, true damage beats sustain, mobility dodges sweetspots"},
+    {"champion": "Irelia", "reason": "Sustained damage, mobility dodges Q, can all-in when he's vulnerable"}
+  ],
+  "Renekton": [
+    {"champion": "Malphite", "reason": "Armor stacking negates damage, comet poke, outscales in teamfights"},
+    {"champion": "Garen", "reason": "Can match his trades, sustain through his damage, executes with ultimate"}
+  ],
+  "Urgot": [
+    {"champion": "Darius", "reason": "Stronger all-in, can match his tankiness, hooks for picks"},
+    {"champion": "Fiora", "reason": "True damage, riposte blocks ultimate execute, mobility advantage"}
+  ],
+  "Illaoi": [
+    {"champion": "Mordekaiser", "reason": "Ultimate isolates and removes tentacles, AP damage ignores armor"},
+    {"champion": "Gangplank", "reason": "Can cleanse E slow, poke from range, barrels zone tentacles"}
+  ],
+  "Shen": [
+    {"champion": "Mordekaiser", "reason": "Ultimate prevents Shen's teleports, can isolate and kill him"},
+    {"champion": "Darius", "reason": "Stronger trading, bleed damage, can match his tankiness"}
+  ],
+  "Riven": [
+    {"champion": "Malphite", "reason": "Armor and attack speed slow counter her combo, comet poke"},
+    {"champion": "Renekton", "reason": "Can match her mobility, stronger early trades, stun breaks shield"}
+  ],
+  "Warwick": [
+    {"champion": "Fiora", "reason": "Riposte blocks ultimate, true damage ignores healing, outduels him"},
+    {"champion": "Jax", "reason": "Counter Strike dodges autos, can match sustain, outscales"}
+  ]
+};
+
 // Current counter data based on role
 let counterData = midCounterData;
 
@@ -235,6 +341,10 @@ function init() {
         champions = adcChampions;
         top20Champions = top20AdcChampions;
         counterData = adcCounterData;
+    } else if (currentRole === 'top') {
+        champions = topChampions;
+        top20Champions = top20TopChampions;
+        counterData = topCounterData;
     } else {
         champions = midChampions;
         top20Champions = top20MidChampions;
@@ -250,35 +360,6 @@ function init() {
     setupEventListeners();
 }
 
-// Update the role display on pick slots
-function updateRoleDisplay() {
-    // Update your team's picking slot
-    const yourTeamSlots = document.querySelectorAll('.your-team .pick-slot');
-    const enemyTeamSlots = document.querySelectorAll('.enemy-team .pick-slot');
-    
-    if (currentRole === 'adc') {
-        // Move picking indicator to ADC slot (index 3)
-        yourTeamSlots[2].classList.remove('picking'); // Remove from MID
-        yourTeamSlots[2].innerHTML = '<div class="role-label">MID</div>'; // Reset MID
-        yourTeamSlots[2].classList.add('empty');
-        
-        yourTeamSlots[3].classList.remove('empty');
-        yourTeamSlots[3].classList.add('picking'); // Add to ADC
-        yourTeamSlots[3].innerHTML = '<div class="role-label">ADC</div><div class="picking-indicator">Picking...</div>';
-        
-        // Move enemy pick to ADC slot (index 3)
-        enemyTeamSlots[2].classList.remove('picked'); // Remove from MID
-        enemyTeamSlots[2].innerHTML = '<div class="role-label">MID</div>'; // Reset MID
-        enemyTeamSlots[2].classList.add('empty');
-        enemyTeamSlots[2].removeAttribute('id');
-        
-        enemyTeamSlots[3].classList.remove('empty');
-        enemyTeamSlots[3].classList.add('picked');
-        enemyTeamSlots[3].id = 'enemyMidPick'; // Keep same ID for code compatibility
-        enemyTeamSlots[3].innerHTML = '<div class="role-label">ADC</div><img src="" alt="" class="picked-champion"><div class="champion-name"></div>';
-    }
-}
-
 // Function to get champion image URL
 function getChampionImageUrl(championName) {
     // Format champion name for Data Dragon (remove spaces and apostrophes)
@@ -292,7 +373,12 @@ function getChampionImageUrl(championName) {
         'Mel': 'Mel',
         'Aurora': 'Aurora',
         'Kai\'Sa': 'Kaisa',
-        'Kog\'Maw': 'KogMaw'
+        'Kog\'Maw': 'KogMaw',
+        'Cho\'Gath': 'Chogath',
+        'K\'Sante': 'KSante',
+        'Dr. Mundo': 'DrMundo',
+        'Tahm Kench': 'TahmKench',
+        'Wukong': 'MonkeyKing'
     };
     
     if (specialCases[championName]) {
@@ -301,6 +387,55 @@ function getChampionImageUrl(championName) {
     
     // Using Riot's Data Dragon CDN (latest version - 15.21.1)
     return `https://ddragon.leagueoflegends.com/cdn/15.21.1/img/champion/${formattedName}.png`;
+}
+
+// Update the role display on pick slots
+function updateRoleDisplay() {
+    // Update your team's picking slot
+    const yourTeamSlots = document.querySelectorAll('.your-team .pick-slot');
+    const enemyTeamSlots = document.querySelectorAll('.enemy-team .pick-slot');
+    
+    if (currentRole === 'adc') {
+        // Move picking indicator to ADC slot (index 3)
+        yourTeamSlots[2].classList.remove('picking');
+        yourTeamSlots[2].innerHTML = '<div class="role-label">MID</div>';
+        yourTeamSlots[2].classList.add('empty');
+        
+        yourTeamSlots[3].classList.remove('empty');
+        yourTeamSlots[3].classList.add('picking');
+        yourTeamSlots[3].innerHTML = '<div class="role-label">ADC</div><div class="picking-indicator">Picking...</div>';
+        
+        // Move enemy pick to ADC slot (index 3)
+        enemyTeamSlots[2].classList.remove('picked');
+        enemyTeamSlots[2].innerHTML = '<div class="role-label">MID</div>';
+        enemyTeamSlots[2].classList.add('empty');
+        enemyTeamSlots[2].removeAttribute('id');
+        
+        enemyTeamSlots[3].classList.remove('empty');
+        enemyTeamSlots[3].classList.add('picked');
+        enemyTeamSlots[3].id = 'enemyMidPick';
+        enemyTeamSlots[3].innerHTML = '<div class="role-label">ADC</div><img src="" alt="" class="picked-champion"><div class="champion-name"></div>';
+    } else if (currentRole === 'top') {
+        // Move picking indicator to TOP slot (index 0)
+        yourTeamSlots[2].classList.remove('picking');
+        yourTeamSlots[2].innerHTML = '<div class="role-label">MID</div>';
+        yourTeamSlots[2].classList.add('empty');
+        
+        yourTeamSlots[0].classList.remove('empty');
+        yourTeamSlots[0].classList.add('picking');
+        yourTeamSlots[0].innerHTML = '<div class="role-label">TOP</div><div class="picking-indicator">Picking...</div>';
+        
+        // Move enemy pick to TOP slot (index 0)
+        enemyTeamSlots[2].classList.remove('picked');
+        enemyTeamSlots[2].innerHTML = '<div class="role-label">MID</div>';
+        enemyTeamSlots[2].classList.add('empty');
+        enemyTeamSlots[2].removeAttribute('id');
+        
+        enemyTeamSlots[0].classList.remove('empty');
+        enemyTeamSlots[0].classList.add('picked');
+        enemyTeamSlots[0].id = 'enemyMidPick';
+        enemyTeamSlots[0].innerHTML = '<div class="role-label">TOP</div><img src="" alt="" class="picked-champion"><div class="champion-name"></div>';
+    }
 }
 
 // Populate champion grid
@@ -320,7 +455,6 @@ function populateChampionGrid() {
         const img = document.createElement('img');
         img.src = getChampionImageUrl(champion);
         img.alt = champion;
-        // Fallback: just hide the image and show champion name larger
         img.onerror = function() {
             this.style.display = 'none';
             card.querySelector('span').style.fontSize = '1rem';
@@ -333,7 +467,6 @@ function populateChampionGrid() {
         card.appendChild(name);
         
         card.addEventListener('click', () => {
-            // Don't allow selecting disabled champions
             if (!card.classList.contains('disabled')) {
                 selectChampion(champion, card);
             }
@@ -362,21 +495,17 @@ function selectRandomEnemy() {
 
 // Select champion
 function selectChampion(champion, card) {
-    // Remove previous selection
     const previousSelected = document.querySelector('.champion-card.selected');
     if (previousSelected) {
         previousSelected.classList.remove('selected');
     }
     
-    // Add selection to new card
     card.classList.add('selected');
     selectedChampion = champion;
     
-    // Update the picking slot with champion image
     const pickingSlot = document.querySelector('.pick-slot.picking');
     let pickingImg = pickingSlot.querySelector('.picked-champion');
     
-    // If image doesn't exist, create it
     if (!pickingImg) {
         pickingImg = document.createElement('img');
         pickingImg.className = 'picked-champion';
@@ -387,7 +516,6 @@ function selectChampion(champion, card) {
     pickingImg.alt = champion;
     pickingImg.style.display = 'block';
     
-    // Enable lock in button
     lockInBtn.disabled = false;
 }
 
@@ -395,7 +523,6 @@ function selectChampion(champion, card) {
 function lockIn() {
     if (!selectedChampion) return;
     
-    // Check if the pick is correct
     const correctCounters = counterData[enemyChampion] || [];
     const isCorrect = correctCounters.some(counter => counter.champion === selectedChampion);
     
@@ -411,7 +538,6 @@ function showFeedback(isCorrect, correctCounters) {
     feedbackTitle.textContent = isCorrect ? 'CORRECT!' : 'INCORRECT';
     feedbackTitle.className = isCorrect ? 'correct' : 'incorrect';
     
-    // Display picks with images
     const yourPickDisplay = document.getElementById('yourPickDisplay');
     yourPickDisplay.innerHTML = '';
     const yourImg = document.createElement('img');
@@ -432,7 +558,6 @@ function showFeedback(isCorrect, correctCounters) {
     enemyImg.style.objectFit = 'cover';
     enemyPickDisplay.appendChild(enemyImg);
     
-    // Display correct answers
     const counterList = document.getElementById('counterList');
     counterList.innerHTML = '';
     
@@ -469,35 +594,28 @@ function closeModal() {
 
 // Next question
 function nextQuestion() {
-    // Reset state
     selectedChampion = '';
     lockInBtn.disabled = true;
     
-    // Remove selection
     const previousSelected = document.querySelector('.champion-card.selected');
     if (previousSelected) {
         previousSelected.classList.remove('selected');
     }
     
-    // Remove image from picking slot
     const pickingSlot = document.querySelector('.pick-slot.picking');
     const pickingImg = pickingSlot.querySelector('.picked-champion');
     if (pickingImg) {
         pickingImg.style.display = 'none';
     }
     
-    // Select new enemy
     selectRandomEnemy();
-    
-    // Repopulate grid with new disabled state
     populateChampionGrid();
     
-    // Switch back to champion select
     feedbackScreen.classList.remove('active');
     championSelectScreen.classList.add('active');
 }
 
-// Main menu - redirect to index
+// Main menu
 function mainMenu() {
     window.location.href = 'index.html';
 }
@@ -510,7 +628,6 @@ function setupEventListeners() {
     document.getElementById('nextQuestionBtn').addEventListener('click', nextQuestion);
     document.getElementById('mainMenuBtn').addEventListener('click', mainMenu);
     
-    // Search functionality
     const searchBar = document.querySelector('.search-bar');
     searchBar.addEventListener('input', handleSearch);
 }
